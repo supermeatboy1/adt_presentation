@@ -35,6 +35,11 @@ public class Wallet {
 	}
 
 	public void withdrawPrompt(Scanner scan) {
+		if (balance == 0.0) {
+			System.out.printf("This account [%s] doesn't contain any money!%n", name);
+			return;
+		}
+		
 		printBalance();
 		boolean done = false;
 		while (!done) {
