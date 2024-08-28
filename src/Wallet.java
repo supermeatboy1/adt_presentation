@@ -19,6 +19,11 @@ public class Wallet {
 	}
 	
 	public void depositPrompt(Scanner scan) {
+		// Authenticate first.
+		if (!authenticate(scan)) {
+			return;
+		}
+		
 		printBalance();
 		boolean done = false;
 		while (!done) {
@@ -42,6 +47,11 @@ public class Wallet {
 	}
 
 	public void withdrawPrompt(Scanner scan) {
+		// Authenticate first.
+		if (!authenticate(scan)) {
+			return;
+		}
+		
 		if (balance == 0.0) {
 			System.out.printf("This account [%s] doesn't contain any money!%n", name);
 			return;

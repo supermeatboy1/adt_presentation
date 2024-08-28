@@ -60,14 +60,14 @@ public class JMoney {
 				case 3: /* Deposit */
 					found = findWalletByName(scan, wallets);
 					
-					if (found != null && found.authenticate(scan)) {
+					if (found != null) {
 						found.depositPrompt(scan);
 					}
 					break;
 				case 4: /* Withdraw */
 					found = findWalletByName(scan, wallets);
 					
-					if (found != null && found.authenticate(scan)) {
+					if (found != null) {
 						found.withdrawPrompt(scan);
 					}
 					break;
