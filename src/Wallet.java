@@ -113,10 +113,20 @@ public class Wallet {
 		System.out.println();
 	}
 
-	public static Wallet creationPrompt(Scanner scan) {
-		System.out.print("Enter your name: ");
-		String name = scan.nextLine();
-
+	public static Wallet creationPrompt(Scanner scan, HashMap<String, Wallet> wallets) {
+		boolean done = false;
+		String name = null;
+		while (!done) {
+			System.out.print("Enter your name: ");
+			name = scan.nextLine();
+			
+			if (wallets.containsKey(name.toLowerCase())) {
+				System.out.printf("Account [%s] exists. Try with a different name.%n", name);
+			} else {
+				break;
+			}
+		}
+		
 		ContactInfo contact_info = ContactInfo.creationPrompt(scan);
 
 		System.out.print("Enter your password: ");

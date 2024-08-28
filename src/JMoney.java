@@ -4,7 +4,7 @@ public class JMoney {
 	public static void main(String[] args) {
 		boolean running = true;
 		Scanner scan = new Scanner(System.in);
-		ArrayList<Wallet> wallets = new ArrayList<Wallet>();
+		HashMap<String, Wallet> wallets = new HashMap<String, Wallet>();
 
 		while (running) {
 			clearConsole();
@@ -14,8 +14,8 @@ public class JMoney {
 			if (!wallets.isEmpty())
 				Wallet.printTableHeader();
 
-			for (Wallet wallet : wallets)
-				wallet.printTabulated();
+			for (String account_name : wallets.keySet())
+				wallets.get(account_name).printTabulated();
 
 			if (!wallets.isEmpty())
 				System.out.println();
@@ -37,13 +37,16 @@ public class JMoney {
 					running = false;
 					break;
 				case 1: /* Create new account */
-					wallets.add(Wallet.creationPrompt(scan));
-					System.out.println("Account added.");
+					Wallet wallet = Wallet.creationPrompt(scan, wallets);
+					if (wallet != null) {
+						wallets.put(wallet.getName().toLowerCase(), wallet);
+						System.out.println("Account added.");
+					}
 					break;
 				case 2: /* Delete account */
 					Wallet found = findWalletByName(scan, wallets);
-					if (found != null) {
-						wallets.remove(found);
+					if (found != null && found.authenticate(scan)) {
+						wallets.remove(found.getName().toLowerCase());
 						System.out.println("Account (" + found.getName() + ") removed.");
 					}
 					break;
@@ -78,16 +81,16 @@ public class JMoney {
 		System.out.println("App closed.");
 	}
 
-	public static Wallet findWalletByName(Scanner scan, ArrayList<Wallet> wallets) {
+	public static Wallet findWalletByName(Scanner scan, HashMap<String, Wallet> wallets) {
 		System.out.print("What is the account's name? ");
 		String name = scan.nextLine();
-		for (Wallet wallet : wallets) {
-			if (wallet.getName().equalsIgnoreCase(name)) {
-				return wallet;
-			}
+		String name_lower = name.toLowerCase();
+		if (wallets.containsKey(name_lower)) {
+			return wallets.get(name_lower);
+		} else {
+			System.out.printf("Account [%s] not found.%n", name);
+			return null;
 		}
-		System.out.printf("Account [%s] not found.%n", name);
-		return null;
 	}
 	// https://stackoverflow.com/a/40041221
 	public static void clearConsole() {
