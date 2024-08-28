@@ -13,7 +13,8 @@ public class JMoney {
 
 			if (!wallets.isEmpty())
 				Wallet.printTableHeader();
-
+			
+			// O(n)
 			for (String account_name : wallets.keySet())
 				wallets.get(account_name).printTabulated();
 
@@ -91,6 +92,7 @@ public class JMoney {
 		System.out.print("What is the account's name? ");
 		String name = scan.nextLine();
 		String name_lower = name.toLowerCase();
+		// O(n)
 		if (wallets.containsKey(name_lower)) {
 			return wallets.get(name_lower);
 		} else {

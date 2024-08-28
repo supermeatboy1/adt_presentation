@@ -25,6 +25,10 @@ public class Wallet {
 			try {
 				System.out.print("Enter the amount to deposit: ");
 				double amount = Double.parseDouble(scan.nextLine());
+				if (amount <= 0.0) {
+					System.out.println("You should an amount more than zero.");
+					continue;
+				}
 				long start = System.nanoTime();
 				deposit(amount);
 				long operation_time = System.nanoTime() - start;
@@ -49,6 +53,10 @@ public class Wallet {
 			try {
 				System.out.print("Enter the amount to withdraw: ");
 				double amount = Double.parseDouble(scan.nextLine());
+				if (amount <= 0.0) {
+					System.out.println("You should an amount more than zero.");
+					continue;
+				}
 				long start = System.nanoTime();
 				if (withdrawAttempt(amount)) {
 					/* Print balance if withdrawal is successful. */
