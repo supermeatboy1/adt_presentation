@@ -39,15 +39,21 @@ public class JMoney {
 				case 1: /* Create new account */
 					Wallet wallet = Wallet.creationPrompt(scan, wallets);
 					if (wallet != null) {
+						long start = System.nanoTime();
 						wallets.put(wallet.getName().toLowerCase(), wallet);
+						long operation_time = System.nanoTime() - start;
 						System.out.println("Account added.");
+						System.out.printf("Operation time: %d nanoseconds%n", operation_time);
 					}
 					break;
 				case 2: /* Delete account */
 					Wallet found = findWalletByName(scan, wallets);
 					if (found != null && found.authenticate(scan)) {
+						long start = System.nanoTime();
 						wallets.remove(found.getName().toLowerCase());
+						long operation_time = System.nanoTime() - start;
 						System.out.println("Account (" + found.getName() + ") removed.");
+						System.out.printf("Operation time: %d nanoseconds%n", operation_time);
 					}
 					break;
 				case 3: /* Deposit */

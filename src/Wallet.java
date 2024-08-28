@@ -25,7 +25,10 @@ public class Wallet {
 			try {
 				System.out.print("Enter the amount to deposit: ");
 				double amount = Double.parseDouble(scan.nextLine());
+				long start = System.nanoTime();
 				deposit(amount);
+				long operation_time = System.nanoTime() - start;
+				System.out.printf("Operation time: %d nanoseconds%n", operation_time);
 				printBalance();
 				done = true;
 			} catch (NumberFormatException e) {
@@ -46,10 +49,13 @@ public class Wallet {
 			try {
 				System.out.print("Enter the amount to withdraw: ");
 				double amount = Double.parseDouble(scan.nextLine());
+				long start = System.nanoTime();
 				if (withdrawAttempt(amount)) {
 					/* Print balance if withdrawal is successful. */
 					printBalance();
 				}
+				long operation_time = System.nanoTime() - start;
+				System.out.printf("Operation time: %d nanoseconds%n", operation_time);
 				done = true;
 			} catch (NumberFormatException e) {
 				System.out.println("Invalid amount.");
